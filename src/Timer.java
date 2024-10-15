@@ -1,16 +1,28 @@
 public class Timer {
-    public long time;
+    private long time;
+    private EventSource eventSource;
 
     public Timer(long time) {
         this.time = time;
+        this.eventSource = new EventSource();
+    }
+
+    public void addListener(EventListener listener) {
+        eventSource.addListener(listener);
     }
 
     public void startTimer() {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+        Thread thread = new Thread(
+                () -> {
+                    try {
+                        Thread.sleep(time);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    eventSource.notifyListeners();
+                }
+        );
+        thread.start();
 
+    }
 }

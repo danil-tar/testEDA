@@ -5,7 +5,7 @@ public class EventSource {
 
     private List<EventListener> listeners = new ArrayList<>();
 
-    public void addListener(EventListenerImp listener) {
+    public void addListener(EventListener listener) {
         listeners.add(listener);
     }
 
